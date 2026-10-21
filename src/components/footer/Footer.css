@@ -1,0 +1,117 @@
+.airbnb-footer-container {
+  width: 100%;
+  background-color: #f7f7f7;
+  border-top: 1px solid var(--line-soft, #ebebeb);
+  margin-top: 24px;
+}
+
+.airbnb-footer-content {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 0 24px 0;
+}
+
+.airbnb-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--line-soft, #ebebeb);
+}
+
+.airbnb-footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.airbnb-footer-col-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #222222);
+  margin-bottom: 12px;
+}
+
+.airbnb-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.airbnb-footer-links li a {
+  font-size: 14px;
+  color: var(--text-primary, #222222);
+  text-decoration: none;
+  transition: text-decoration 0.2s ease;
+}
+
+.airbnb-footer-links li a:hover {
+  text-decoration: underline;
+}
+
+.airbnb-footer-links li a:focus-visible {
+  outline: 2px solid #222222;
+  outline-offset: 2px;
+}
+
+.airbnb-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  font-size: 14px;
+  color: var(--text-primary, #222222);
+}
+
+.airbnb-footer-legal {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.airbnb-footer-legal a {
+  color: var(--text-primary, #222222);
+  text-decoration: none;
+}
+
+.airbnb-footer-legal a:hover {
+  text-decoration: underline;
+}
+
+.airbnb-footer-dot {
+  color: #717171;
+}
+
+.airbnb-footer-settings {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.airbnb-footer-lang-btn,
+.airbnb-footer-currency-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #222222);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.airbnb-footer-lang-btn:hover,
+.airbnb-footer-currency-btn:hover {
+  text-decoration: underline;
+}
+
+.airbnb-footer-lang-btn svg {
+  width: 16px;
+  height: 16px;
+}

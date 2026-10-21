@@ -1,0 +1,210 @@
+.calendar-section {
+  width: 100%;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--line-soft, #ebebeb);
+}
+
+.calendar-header-block {
+  margin-bottom: 24px;
+}
+
+.calendar-main-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary, #222222);
+  margin: 0;
+}
+
+.calendar-subtitle {
+  font-size: 14px;
+  color: var(--muted, #717171);
+  margin-top: 4px;
+}
+
+.calendar-double-month-wrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 652px;
+}
+
+.calendar-nav-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+.cal-nav-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle, #b0b0b0);
+  background-color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary, #222222);
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.cal-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: #dddddd;
+}
+
+.cal-nav-btn:hover:not(:disabled) {
+  border-color: #222222;
+  transform: scale(1.04);
+}
+
+.cal-nav-icon {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+.cal-nav-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.calendar-month-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-month-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary, #222222);
+  text-align: center;
+  margin-bottom: 16px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-weekdays-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted, #717171);
+  margin-bottom: 8px;
+}
+
+.calendar-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 4px;
+}
+
+.cal-day-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #222222);
+  cursor: pointer;
+}
+
+.cal-day-cell span {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.cal-day-empty {
+  cursor: default;
+}
+
+/* Range styling */
+.cal-day-start span {
+  background-color: #222222;
+  color: #ffffff;
+}
+
+.cal-day-end span {
+  background-color: #222222;
+  color: #ffffff;
+}
+
+.cal-day-in-range {
+  background-color: #f7f7f7;
+}
+
+.cal-day-start::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  background-color: #f7f7f7;
+  z-index: 0;
+}
+
+.cal-day-end::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 50%;
+  background-color: #f7f7f7;
+  z-index: 0;
+}
+
+.cal-day-blocked {
+  color: #b0b0b0;
+  text-decoration: line-through;
+  cursor: default;
+}
+
+.calendar-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  max-width: 652px;
+}
+
+.calendar-keyboard-icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-primary, #222222);
+}
+
+.calendar-clear-dates-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #222222);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.calendar-clear-dates-btn:hover {
+  color: #000000;
+}

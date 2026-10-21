@@ -1,0 +1,169 @@
+:root {
+  --ink: #222222;
+  --muted: #6a6a6a;
+  --muted2: #717171;
+  --line: #dddddd;
+  --line-soft: #ebebeb;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --rausch: #ff385c;
+  --reserve: linear-gradient(to right, #e61e4d 0%, #e31c5f 50%, #d70466 100%);
+  --reserve-hover: linear-gradient(to right, #d81b5f 0%, #c31a5b 50%, #bd0463 100%);
+  --grey100: #f7f7f7;
+  --grey200: #f2f2f2;
+  --grey300: #ebebeb;
+  --container: 1280px;
+  --font: "Airbnb Cereal VF", Circular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --shadow-card: 0 6px 16px rgba(0, 0, 0, 0.12);
+  --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.43;
+}
+
+/* Scroll lock when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 26px;
+  line-height: 30px;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
+h2 {
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 500;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  color: inherit;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
+  color: var(--ink);
+  padding: 10px 16px;
+  border-radius: 0 0 8px 8px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.skip-link:focus {
+  left: 16px;
+}
+
+/* Base Container */
+.page-container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+/* 2-Column Property Grid */
+.property-layout-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+  position: relative;
+}
+
+.property-main-col {
+  flex: 1;
+  max-width: 650px;
+  min-width: 0;
+}
+
+.property-sidebar-col {
+  width: 372px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+/* Accessible focus styling */
+:focus {
+  outline: none;
+}
+
+body.keyboard-user :focus-visible,
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Section scroll margins for sticky subheader */
+#photos,
+#amenities,
+#reviews,
+#location,
+#nearby-stays,
+#reservation-card {
+  scroll-margin-top: 80px;
+}
+
+/* Accessibility: Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

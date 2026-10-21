@@ -1,0 +1,69 @@
+.sleeping-arrangements-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.sleeping-section-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.sleeping-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.sleeping-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.sleeping-img-wrap {
+  width: 100%;
+  height: 212px;
+  background-color: var(--surface-bg);
+}
+
+.sleeping-thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.sleeping-card:hover .sleeping-thumbnail-img {
+  transform: scale(1.02);
+}
+
+.sleeping-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+}
+
+.sleeping-room-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.sleeping-bed-type {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+}

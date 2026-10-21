@@ -1,0 +1,150 @@
+.global-header {
+  position: relative;
+  z-index: 50;
+  border-bottom: 1px solid var(--line-soft);
+  background: #ffffff;
+  padding: 0 80px;
+}
+
+.global-header-inner {
+  max-width: 1760px;
+  margin: 0 auto;
+  height: 88px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.header-logo-container {
+  justify-self: start;
+}
+
+.header-logo {
+  display: inline-flex;
+  align-items: center;
+  color: var(--rausch);
+}
+
+.header-search-container {
+  justify-self: center;
+}
+
+.search-bar {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 40px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  transition: box-shadow 0.2s ease;
+}
+
+.search-bar:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.search-pill-btn {
+  border: none;
+  background: none;
+  padding: 0 16px;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 40px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.search-pill-btn:first-of-type {
+  padding-left: 8px;
+}
+
+.searchbar-house-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+.search-pill-muted {
+  color: var(--muted2);
+  font-weight: 400;
+}
+
+.search-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--line);
+}
+
+.search-action-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: var(--rausch);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.search-action-btn:hover {
+  filter: brightness(0.95);
+}
+
+.search-action-btn:active {
+  transform: scale(0.95);
+}
+
+.header-user-nav {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.host-link {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 14px;
+  border-radius: 22px;
+  transition: background 0.18s;
+  color: var(--ink);
+}
+
+.host-link:hover {
+  background: var(--grey100);
+}
+
+.icon-circle-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: var(--grey200);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.icon-circle-btn:hover {
+  background: var(--grey300);
+}
+
+@media (max-width: 1128px) {
+  .global-header {
+    padding: 0 40px;
+  }
+}

@@ -1,0 +1,69 @@
+._YidPyi {
+  padding: 26px 0 32px;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* Translation notice banner */
+._yWMtoE {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--grey100);
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 14px;
+  color: #222222;
+  margin-bottom: 16px;
+}
+
+._yWMtoE a {
+  text-decoration: underline;
+  font-weight: 500;
+  color: inherit;
+}
+
+/* Description Text */
+._YidPyi p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #222222;
+  white-space: pre-line;
+}
+
+._YidPyi ._kfKUOt {
+  max-height: 6.2em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(#000 62%, transparent);
+  mask-image: linear-gradient(#000 62%, transparent);
+}
+
+.property-desc-text.expanded {
+  max-height: unset;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* Show More Button */
+._yWwrkC {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #222222;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+._VUbbfz {
+  width: 12px;
+  height: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

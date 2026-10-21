@@ -1,0 +1,73 @@
+.things-section-container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 0;
+  border-top: 1px solid var(--line-soft, #ebebeb);
+}
+
+.things-section-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary, #222222);
+  margin-bottom: 24px;
+}
+
+.things-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.things-col-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.things-icon-wrapper {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 12px;
+  color: var(--text-primary, #222222);
+}
+
+.things-icon-wrapper svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.things-col-heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary, #222222);
+  margin-bottom: 12px;
+}
+
+.things-col-text {
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--text-primary, #222222);
+  margin: 0 0 6px 0;
+}
+
+.things-learn-more-link {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary, #222222);
+  text-decoration: underline;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.things-learn-more-link:hover {
+  opacity: 0.7;
+}
+
+.things-learn-more-link:focus-visible {
+  outline: 2px solid #222222;
+  outline-offset: 2px;
+  border-radius: 4px;
+}

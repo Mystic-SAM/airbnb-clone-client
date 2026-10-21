@@ -1,0 +1,190 @@
+/* Location Section Container */
+.location-section-container {
+  padding: 48px 0;
+  border-top: 1px solid var(--line-soft);
+  width: 100%;
+}
+
+.location-section-title {
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.location-section-address {
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+
+/* Map Container */
+.location-map-container {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 480px;
+  background: #e8eef0;
+}
+
+.location-map-surface {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 40%, #cfe3c8 0 6%, transparent 6%),
+    radial-gradient(circle at 70% 60%, #cfe3c8 0 8%, transparent 8%),
+    linear-gradient(115deg, #acd3e6 0 34%, #e9f0e4 34% 100%);
+  transform-origin: center center;
+}
+
+.location-map-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(90deg, rgba(180, 180, 170, 0.5) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(180, 180, 170, 0.35) 1px, transparent 1px);
+  background-size: 90px 90px, 90px 90px;
+  opacity: 0.5;
+}
+
+/* Top-Left Search Button */
+.location-map-search-btn {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.1s ease;
+}
+
+.location-map-search-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.location-map-search-btn:active {
+  transform: scale(0.95);
+}
+
+/* Top-Right Zoom Group */
+.location-map-zoom-group {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 2;
+}
+
+.location-zoom-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.location-zoom-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.location-zoom-btn:hover {
+  background-color: var(--grey100);
+}
+
+.location-zoom-btn:active {
+  transform: scale(0.95);
+}
+
+/* Center Marker Pin */
+.location-map-center-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #222222;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.location-map-center-pin svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* Subheadings and Texts */
+.location-exact-notice {
+  font-size: 14px;
+  color: var(--ink);
+  margin-top: 18px;
+}
+
+.location-neighbourhood-title {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 500;
+  margin: 40px 0 12px;
+  color: var(--ink);
+}
+
+.location-neighbourhood-desc {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.location-show-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink);
+  padding: 0;
+}
+
+.location-chevron-icon {
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.location-chevron-icon.open {
+  transform: rotate(90deg);
+}
