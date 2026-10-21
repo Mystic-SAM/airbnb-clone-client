@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { PhotoItem, PhotoCategory } from '../../types/gallery';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import './PhotoTourModal.css';
@@ -6,6 +6,7 @@ import './PhotoTourModal.css';
 interface PhotoTourModalProps {
   isOpen: boolean;
   photos: PhotoItem[];
+  selectedPhotoId?: string | number;
   onClose: () => void;
   onSelectPhoto: (photoIndex: number) => void;
 }
@@ -127,7 +128,13 @@ const TOUR_CATEGORIES: TourCategoryConfig[] = [
   }
 ];
 
-export function PhotoTourModal({ isOpen, photos, onClose, onSelectPhoto }: PhotoTourModalProps) {
+export function PhotoTourModal({
+  isOpen,
+  photos,
+  selectedPhotoId,
+  onClose,
+  onSelectPhoto
+}: PhotoTourModalProps) {
   const containerRef = useFocusTrap(isOpen);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isSaved, setIsSaved] = useState(false);
@@ -147,12 +154,49 @@ export function PhotoTourModal({ isOpen, photos, onClose, onSelectPhoto }: Photo
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
+  const scrollToPhoto = useCallback((targetId: string | number) => {
+    // 1. Direct ID match on photo button
+    const directEl = document.getElementById(`tour-photo-${targetId}`);
+    if (directEl) {
+      directEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    // 2. Lookup by photo.id in photos list -> data-idx
+    const photoIdx = photos.findIndex(
+      p => p.id === Number(targetId) || String(p.id) === String(targetId)
+    );
+    if (photoIdx !== -1) {
+      const idxEl = document.querySelector<HTMLElement>(`[data-idx="${photoIdx}"]`);
+      if (idxEl) {
+        idxEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+    }
+
+    // 3. Fallback: match by section ID
+    const sectionEl = document.getElementById(String(targetId));
+    if (sectionEl) {
+      sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [photos]);
+
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  useEffect(() => {
+    if (!isOpen || selectedPhotoId === undefined || selectedPhotoId === null) return;
+
+    const timer = setTimeout(() => {
+      scrollToPhoto(selectedPhotoId);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [isOpen, selectedPhotoId, scrollToPhoto]);
 
   if (!isOpen) return null;
 
@@ -315,6 +359,7 @@ export function PhotoTourModal({ isOpen, photos, onClose, onSelectPhoto }: Photo
                         return (
                           <button
                             key={pIdx}
+                            id={`tour-photo-${photo.id}`}
                             className="_GXrMIo"
                             type="button"
                             data-idx={pIdx}

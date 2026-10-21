@@ -32,10 +32,10 @@ import { NEARBY_STAYS_DATA } from './data/nearbyData';
 
 export function App() {
   const isStickySubHeaderVisible = useScrollSpy(500);
-  const { modal, photoIndex, openModal, closeModal, setPhotoIndex } = useModalParam();
+  const { modal, photoIndex, photoId, openModal, closeModal, setPhotoIndex } = useModalParam();
 
-  const handleOpenPhotoTour = () => {
-    openModal('PHOTO_TOUR');
+  const handleOpenPhotoTour = (selectedPhotoId?: string | number) => {
+    openModal('PHOTO_TOUR', 0, selectedPhotoId);
   };
 
   const handleOpenLightbox = (index: number) => {
@@ -116,6 +116,7 @@ export function App() {
       <PhotoTourModal
         isOpen={modal === 'PHOTO_TOUR' || modal === 'LIGHTBOX'}
         photos={GALLERY_PHOTOS}
+        selectedPhotoId={photoId}
         onClose={closeModal}
         onSelectPhoto={handleOpenLightbox}
       />

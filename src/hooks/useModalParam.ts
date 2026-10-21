@@ -4,6 +4,7 @@ import { ModalType } from '../types/gallery';
 interface ModalState {
   modal: ModalType;
   photoIndex: number;
+  photoId?: string | number;
 }
 
 function parseUrlParams(): ModalState {
@@ -49,13 +50,13 @@ export function useModalParam() {
     }
   }, []);
 
-  const openModal = useCallback((modal: ModalType, photoIndex: number = 0) => {
-    setModalState({ modal, photoIndex });
+  const openModal = useCallback((modal: ModalType, photoIndex: number = 0, photoId?: string | number) => {
+    setModalState({ modal, photoIndex, photoId });
     updateUrl(modal, photoIndex);
   }, [updateUrl]);
 
   const closeModal = useCallback(() => {
-    setModalState({ modal: 'NONE', photoIndex: 0 });
+    setModalState({ modal: 'NONE', photoIndex: 0, photoId: undefined });
     updateUrl('NONE', 0);
   }, [updateUrl]);
 
@@ -86,6 +87,7 @@ export function useModalParam() {
   return {
     modal: modalState.modal,
     photoIndex: modalState.photoIndex,
+    photoId: modalState.photoId,
     openModal,
     closeModal,
     setPhotoIndex

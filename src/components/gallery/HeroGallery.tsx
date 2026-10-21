@@ -4,7 +4,7 @@ import './HeroGallery.css';
 
 interface HeroGalleryProps {
   photos: PhotoItem[];
-  onOpenPhotoTour: () => void;
+  onOpenPhotoTour: (photoId?: number | string) => void;
   onOpenLightbox?: (index: number) => void;
 }
 
@@ -27,7 +27,7 @@ export function HeroGallery({ photos, onOpenPhotoTour }: HeroGalleryProps) {
             key={photo.id || i}
             type="button"
             className={`hero-photo-btn hero-photo-btn-${i + 1}`}
-            onClick={onOpenPhotoTour}
+            onClick={() => onOpenPhotoTour(photo.id)}
             aria-label={`Romantic Jacuzzi 1BHK Candolim | Mirashya UG10 image ${i + 1}`}
           >
             <img
@@ -45,7 +45,7 @@ export function HeroGallery({ photos, onOpenPhotoTour }: HeroGalleryProps) {
           type="button"
           className="show-all-photos-btn"
           id="showAllPhotos"
-          onClick={onOpenPhotoTour}
+          onClick={() => onOpenPhotoTour()}
           aria-label="Show all photos"
         >
           <GridDotsIcon />
