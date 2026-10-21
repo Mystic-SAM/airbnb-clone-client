@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacation Rental Marketplace - Production Architecture Diagram</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    @page {
+      size: 1920px 1080px;
+      margin: 0;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 1920px;
+      height: 1080px;
+      background: #0a0f1d;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 24px 32px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 56, 92, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.06) 0%, transparent 40%),
+        radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 24px 24px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #ff385c, #d70466);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 56, 92, 0.4);
+    }
+
+    .title-group h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .title-group p {
+      font-size: 12px;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-pink {
+      background: rgba(255, 56, 92, 0.15);
+      color: #ff385c;
+      border: 1px solid rgba(255, 56, 92, 0.3);
+    }
+
+    .badge-cyan {
+      background: rgba(6, 182, 212, 0.15);
+      color: #06b6d4;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+
+    .badge-green {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(30, 41, 59, 0.6);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Main Grid Layout */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 310px 1fr 340px;
+      gap: 14px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Column Containers */
+    .col-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      backdrop-filter: blur(8px);
+    }
+
+    .col-card.accent-pink { border-top: 3px solid #ff385c; }
+    .col-card.accent-cyan { border-top: 3px solid #06b6d4; }
+    .col-card.accent-blue { border-top: 3px solid #3b82f6; }
+    .col-card.accent-purple { border-top: 3px solid #a855f7; }
+    .col-card.accent-green { border-top: 3px solid #22c55e; }
+    .col-card.accent-amber { border-top: 3px solid #f59e0b; }
+
+    .sec-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Sub-components & Blocks */
+    .block {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+
+    .block:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(30, 41, 59, 0.95);
+    }
+
+    .block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .block-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .block-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .block-desc {
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.35;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(15, 23, 42, 0.8);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .tag-highlight {
+      background: rgba(6, 182, 212, 0.15);
+      color: #38bdf8;
+      border-color: rgba(6, 182, 212, 0.3);
+    }
+
+    .tag-pink {
+      background: rgba(255, 56, 92, 0.15);
+      color: #ff385c;
+      border-color: rgba(255, 56, 92, 0.3);
+    }
+
+    .tag-green {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+
+    /* Center Middle Content */
+    .center-col {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .gateway-bar {
+      background: linear-gradient(90deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 10px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .gateway-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .gateway-pill {
+      background: #06b6d4;
+      color: #0a0f1d;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .gateway-features {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Microservices Grid (8 Services) */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .service-card {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .service-card.primary {
+      border-left: 3px solid #ff385c;
+    }
+
+    .service-card.booking {
+      border-left: 3px solid #3b82f6;
+    }
+
+    .service-card.search {
+      border-left: 3px solid #06b6d4;
+    }
+
+    .service-card.payment {
+      border-left: 3px solid #22c55e;
+    }
+
+    .service-card.review {
+      border-left: 3px solid #eab308;
+    }
+
+    .service-card.auth {
+      border-left: 3px solid #a855f7;
+    }
+
+    .service-card.host {
+      border-left: 3px solid #f97316;
+    }
+
+    .service-card.notif {
+      border-left: 3px solid #ec4899;
+    }
+
+    .service-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .service-tech {
+      font-size: 10px;
+      color: #94a3b8;
+      line-height: 1.3;
+    }
+
+    /* Async Event Stream Bar */
+    .event-stream-bar {
+      background: linear-gradient(90deg, rgba(88, 28, 135, 0.25), rgba(30, 41, 59, 0.9));
+      border: 1px dashed rgba(168, 85, 247, 0.4);
+      border-radius: 8px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .event-stream-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #c084fc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .event-topics {
+      display: flex;
+      gap: 6px;
+    }
+
+    /* Storage Tier Grid */
+    .storage-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .storage-card {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .storage-card.db { border-top: 2px solid #3b82f6; }
+    .storage-card.cache { border-top: 2px solid #ef4444; }
+    .storage-card.search-db { border-top: 2px solid #06b6d4; }
+    .storage-card.object-storage { border-top: 2px solid #eab308; }
+    .storage-card.dr { border-top: 2px solid #22c55e; }
+
+    .storage-name {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .storage-desc {
+      font-size: 10px;
+      color: #94a3b8;
+      line-height: 1.3;
+    }
+
+    /* Flow Connectors & Legend Footer */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 18px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      font-size: 11px;
+    }
+
+    .legend-group {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #cbd5e1;
+    }
+
+    .legend-line {
+      width: 20px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .legend-line.http { background: #38bdf8; }
+    .legend-line.grpc { background: #a855f7; }
+    .legend-line.async { background: #f59e0b; border-top: 2px dashed #f59e0b; height: 0; }
+    .legend-line.db { background: #22c55e; }
+
+    .scaling-pillars {
+      display: flex;
+      gap: 8px;
+    }
+
+    .pillar-tag {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: #38bdf8;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="brand-logo">⌂</div>
+      <div class="title-group">
+        <h1>Vacation Rental Marketplace <span class="badge badge-pink">Production Architecture</span></h1>
+        <p>Enterprise Scalable System Design • Multi-Region Edge • Microservices • Event-Driven Storage</p>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="badge badge-cyan">Frontend</span>
+        <span>React 19 + TypeScript + Vercel Edge</span>
+      </div>
+      <div class="meta-item">
+        <span class="badge badge-green">Backend</span>
+        <span>Stateless Kubernetes / Node.js & Go Microservices</span>
+      </div>
+      <div class="meta-item">
+        <span class="badge badge-pink">Scale</span>
+        <span>100M+ Monthly Visits • 99.99% SLA</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Architecture Grid -->
+  <main class="main-grid">
+
+    <!-- Column 1: Client Tier & Edge / CDN Layer -->
+    <div class="col-card accent-pink">
+      <div class="sec-title">
+        <span>1. Client & Edge Delivery Tier</span>
+        <span class="badge badge-pink">Client Layer</span>
+      </div>
+
+      <!-- Client Application -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-title">🖥️ Desktop & Web Client</span>
+          <span class="tag tag-pink">SPA</span>
+        </div>
+        <p class="block-desc">
+          High-fidelity Airbnb clone frontend with dynamic listing views, Photo Tour, Lightbox modal, interactive booking widget, and responsive layouts.
+        </p>
+        <div class="tag-list">
+          <span class="tag">React 19</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Vite 6</span>
+          <span class="tag">Vanilla CSS</span>
+          <span class="tag">URL Param State</span>
+          <span class="tag">Keyboard A11y</span>
+        </div>
+      </div>
+
+      <!-- Edge Network & CDN -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-title">🌐 Edge Network & CDN</span>
+          <span class="tag tag-highlight">Vercel Edge</span>
+        </div>
+        <p class="block-desc">
+          Global Anycast Edge network handling TLS termination, asset caching, DDoS mitigation, and edge header rewrites.
+        </p>
+        <div class="tag-list">
+          <span class="tag">Global PoPs</span>
+          <span class="tag">Brotli / Gzip</span>
+          <span class="tag">HTTP/3 (QUIC)</span>
+          <span class="tag">WebP Optimizer</span>
+          <span class="tag">WAF & DDoS Shield</span>
+        </div>
+      </div>
+
+      <!-- CI/CD Pipeline -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-title">🚀 CI/CD & Deployment</span>
+          <span class="tag tag-green">Automated</span>
+        </div>
+        <p class="block-desc">
+          GitHub Actions automated pipeline with strict linting, type-checking, bundle optimization, and zero-downtime atomic deployments.
+        </p>
+        <div class="tag-list">
+          <span class="tag">GitHub Actions</span>
+          <span class="tag">Vercel CLI</span>
+          <span class="tag">Preview Deployments</span>
+          <span class="tag">Production Rollouts</span>
+          <span class="tag">Secret Vault</span>
+        </div>
+      </div>
+
+      <!-- Edge Caching Strategies -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-title">⚡ Client Performance & Cache</span>
+        </div>
+        <div class="tag-list">
+          <span class="tag">Cache-Control Immutable</span>
+          <span class="tag">Service Worker Prefetch</span>
+          <span class="tag">IntersectionObserver</span>
+          <span class="tag">Sub-100ms FCP</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2: API Gateway, Microservices & Data Tier -->
+    <div class="center-col">
+
+      <!-- API Gateway -->
+      <div class="gateway-bar">
+        <div class="gateway-title-wrap">
+          <span class="gateway-pill">2. API Gateway</span>
+          <span style="font-size: 13px; font-weight: 700; color: #ffffff;">Kong / Envoy Traffic Director</span>
+        </div>
+        <div class="gateway-features">
+          <span class="tag tag-highlight">JWT Auth & RBAC</span>
+          <span class="tag tag-highlight">Token Bucket Rate Limiter</span>
+          <span class="tag tag-highlight">Circuit Breaker</span>
+          <span class="tag tag-highlight">SSL Offload</span>
+          <span class="tag tag-highlight">gRPC Web Transcoding</span>
+        </div>
+      </div>
+
+      <!-- Core Microservices Grid (Kubernetes Cluster) -->
+      <div class="col-card accent-cyan" style="padding: 12px; gap: 8px;">
+        <div class="sec-title">
+          <span>3. Core Microservices Tier (Horizontally Scaled Kubernetes Cluster)</span>
+          <span class="badge badge-cyan">Stateless Compute</span>
+        </div>
+
+        <div class="services-grid">
+          <!-- Auth Service -->
+          <div class="service-card auth">
+            <div class="service-name">🔐 Auth & Identity</div>
+            <div class="service-tech">OAuth 2.0 / OIDC, JWT Token issuance, 2FA verification, Session management.</div>
+            <div class="tag-list"><span class="tag">Node.js</span><span class="tag">Redis Session</span></div>
+          </div>
+
+          <!-- Listing Service -->
+          <div class="service-card primary">
+            <div class="service-name">🏠 Listing & Property</div>
+            <div class="service-tech">Property metadata, 43-photo gallery configs, sleeping arrangements, amenities.</div>
+            <div class="tag-list"><span class="tag">Go</span><span class="tag">PostgreSQL</span></div>
+          </div>
+
+          <!-- Search Service -->
+          <div class="service-card search">
+            <div class="service-name">🔍 Search & Discovery</div>
+            <div class="service-tech">Geospatial bounding-box queries, price/amenity filtering, availability ranking.</div>
+            <div class="tag-list"><span class="tag">Java</span><span class="tag">OpenSearch</span></div>
+          </div>
+
+          <!-- Booking Service -->
+          <div class="service-card booking">
+            <div class="service-name">📅 Booking & Reserve</div>
+            <div class="service-tech">Real-time calendar locks, double-booking prevention, reservation lifecycle.</div>
+            <div class="tag-list"><span class="tag">Go</span><span class="tag">Redlock</span></div>
+          </div>
+
+          <!-- Payment Service -->
+          <div class="service-card payment">
+            <div class="service-name">💳 Payment & Escrow</div>
+            <div class="service-tech">Stripe integration, guest checkout, host payout automation, refund ledger.</div>
+            <div class="tag-list"><span class="tag">Go</span><span class="tag">PCI-DSS Vault</span></div>
+          </div>
+
+          <!-- Reviews Service -->
+          <div class="service-card review">
+            <div class="service-name">⭐ Reviews & Ratings</div>
+            <div class="service-tech">Category scoring (cleanliness, location, etc.), distribution math, Guest Favourite.</div>
+            <div class="tag-list"><span class="tag">Node.js</span><span class="tag">PostgreSQL</span></div>
+          </div>
+
+          <!-- Host Service -->
+          <div class="service-card host">
+            <div class="service-name">👤 User & Host Profile</div>
+            <div class="service-tech">Host verification, Superhost status, co-host permissions, messaging.</div>
+            <div class="tag-list"><span class="tag">Node.js</span><span class="tag">PostgreSQL</span></div>
+          </div>
+
+          <!-- Notification Service -->
+          <div class="service-card notif">
+            <div class="service-name">🔔 Notifications</div>
+            <div class="service-tech">Real-time WebSockets, mobile push alerts, transactional email and SMS dispatch.</div>
+            <div class="tag-list"><span class="tag">Rust</span><span class="tag">WebSockets</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Async Event Bus -->
+      <div class="event-stream-bar">
+        <div class="event-stream-label">
+          <span>⚡ 4. Asynchronous Event Bus (Apache Kafka / RabbitMQ)</span>
+        </div>
+        <div class="event-topics">
+          <span class="tag" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe;">listing.updated</span>
+          <span class="tag" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe;">booking.confirmed</span>
+          <span class="tag" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe;">payment.succeeded</span>
+          <span class="tag" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe;">review.submitted</span>
+        </div>
+      </div>
+
+      <!-- Storage & Persistence Tier -->
+      <div class="col-card accent-green" style="padding: 12px; gap: 8px;">
+        <div class="sec-title">
+          <span>5. Data Persistence & Storage Layer</span>
+          <span class="badge badge-green">High Availability</span>
+        </div>
+
+        <div class="storage-grid">
+          <!-- Relational DB Master -->
+          <div class="storage-card db">
+            <div class="storage-name">🐘 Primary DB (Master)</div>
+            <div class="storage-desc">Amazon Aurora PostgreSQL Multi-AZ with synchronous replication for ACID write consistency.</div>
+            <div class="tag-list"><span class="tag tag-green">Write Master</span></div>
+          </div>
+
+          <!-- Read Replicas -->
+          <div class="storage-card db">
+            <div class="storage-name">📖 Read Replicas</div>
+            <div class="storage-desc">Horizontally scaled Aurora Read Replicas serving high-volume listing reads with connection pooling.</div>
+            <div class="tag-list"><span class="tag">PgBouncer</span><span class="tag">Auto-scale</span></div>
+          </div>
+
+          <!-- Redis Cluster -->
+          <div class="storage-card cache">
+            <div class="storage-name">⚡ Redis Cache Cluster</div>
+            <div class="storage-desc">Distributed cache for fast listing details, rate limits, active user sessions, and calendar states.</div>
+            <div class="tag-list"><span class="tag tag-pink">Sub-millisecond</span></div>
+          </div>
+
+          <!-- Search Engine -->
+          <div class="storage-card search-db">
+            <div class="storage-name">🔎 OpenSearch Cluster</div>
+            <div class="storage-desc">Inverted index supporting geo-queries, autocomplete, faceted filtering, and price aggregations.</div>
+            <div class="tag-list"><span class="tag tag-highlight">Geo-spatial Index</span></div>
+          </div>
+
+          <!-- Object Storage & Backup -->
+          <div class="storage-card object-storage">
+            <div class="storage-name">📦 S3 / R2 Media Storage</div>
+            <div class="storage-desc">High-durability blob storage for 43+ property gallery images, WebP assets, and PITR backups.</div>
+            <div class="tag-list"><span class="tag">11 9's Durability</span><span class="tag">CDN Origin</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Column 3: Scaling, Security, Observability -->
+    <div class="col-card accent-purple">
+      <div class="sec-title">
+        <span>6. Scaling, Security & Ops</span>
+        <span class="badge badge-cyan">Infrastructure</span>
+      </div>
+
+      <!-- Scaling Strategy -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-title">📈 High-Scale Strategy</span>
+        </div>
+        <p class="block-desc">
+          Engineered for extreme traffic spikes with multi-layer caching, stateless container replicas, and async queue processing.
+        </p>
+        <div class="tag-list">
+          <span class="tag">Horizontal Pod Autoscaler (HPA)</span>
+          <span class="tag">Multi-Zone Redundancy</span>
+          <span class="tag">Distributed Redlock</span>
+          <span class="tag">Database Partitioning</span>
+          <span class="tag">Edge Asset Caching</span>
+        </div>
+      </div>
+
+      <!-- Observability & Telemetry -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-title">📊 Observability & Telemetry</span>
+          <span class="tag tag-highlight">Datadog</span>
+        </div>
+        <p class="block-desc">
+          Full-stack distributed tracing, application performance monitoring (APM), and proactive anomaly detection.
+        </p>
+        <div class="tag-list">
+          <span class="tag">OpenTelemetry Traces</span>
+          <span class="tag">Prometheus Metrics</span>
+          <span class="tag">Grafana Dashboards</span>
+          <span class="tag">ELK Log Aggregation</span>
+          <span class="tag">PagerDuty Alerts</span>
+        </div>
+      </div>
+
+      <!-- Security & Governance -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-title">🛡️ Security & Compliance</span>
+          <span class="tag tag-green">Zero Trust</span>
+        </div>
+        <p class="block-desc">
+          Defense-in-depth security with automated secret rotation, mutual TLS (mTLS), and strict network segmentation.
+        </p>
+        <div class="tag-list">
+          <span class="tag">AWS Secrets Manager</span>
+          <span class="tag">mTLS Inter-service</span>
+          <span class="tag">PCI-DSS Compliant</span>
+          <span class="tag">GDPR Data Isolation</span>
+          <span class="tag">Continuous SAST / DAST</span>
+        </div>
+      </div>
+
+      <!-- Disaster Recovery -->
+      <div class="block">
+        <div class="block-header">
+          <span class="block-title">🔄 Backup & Disaster Recovery</span>
+        </div>
+        <div class="tag-list">
+          <span class="tag">Continuous Aurora PITR</span>
+          <span class="tag">Cross-Region Replication</span>
+          <span class="tag">RTO &lt; 15 mins</span>
+          <span class="tag">RPO &lt; 1 min</span>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer Legend & Flow Summary -->
+  <footer class="footer">
+    <div class="legend-group">
+      <span style="font-weight: 700; color: #ffffff;">Legend:</span>
+      <div class="legend-item">
+        <div class="legend-line http"></div>
+        <span>HTTPS / Client Traffic</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-line grpc"></div>
+        <span>gRPC Microservice RPC</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-line async"></div>
+        <span>Async Kafka Events</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-line db"></div>
+        <span>Database Read/Write</span>
+      </div>
+    </div>
+
+    <div class="scaling-pillars">
+      <span class="pillar-tag">⚡ Edge Caching</span>
+      <span class="pillar-tag">🔄 Stateless Scale</span>
+      <span class="pillar-tag">🔒 Distributed Locking</span>
+      <span class="pillar-tag">🐘 Read Replicas</span>
+      <span class="pillar-tag">🚀 99.99% Availability</span>
+    </div>
+  </footer>
+
+</body>
+</html>
